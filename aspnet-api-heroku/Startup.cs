@@ -72,8 +72,8 @@ namespace aspnet_api_heroku
         {
             // Adds the database context to the DI container and
             // specify that the database context will use an in-memory database.
-            services.AddDbContext<TodoContext>(opt =>
-               opt.UseInMemoryDatabase("TodoList"));
+            services.AddDbContext<ArticleContext>(opt =>
+               opt.UseInMemoryDatabase("ArticleList"));
             services.AddControllers();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -111,6 +111,7 @@ namespace aspnet_api_heroku
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty; // Serve the Swagger UI at the app's root
             });
 
             app.UseHttpsRedirection();
