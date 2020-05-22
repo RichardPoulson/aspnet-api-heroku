@@ -7,6 +7,15 @@ using Microsoft.Extensions.Logging;
 
 namespace aspnet_api_heroku.Controllers
 {
+    /// <summary>
+    /// <list type="number">
+    /// <item>
+    /// <description>
+    /// <see href="https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-3.1">Create web APIs with ASP.NET Core | Microsoft Docs</see>
+    /// </description>
+    /// </item>
+    /// </list>
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
