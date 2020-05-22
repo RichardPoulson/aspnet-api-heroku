@@ -32,6 +32,10 @@ namespace aspnet_api_heroku.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.httpgetattribute?view=aspnetcore-3.1">HttpGetAttribute Class (Microsoft.AspNetCore.Mvc) | Microsoft Docs</see>
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
