@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,12 +12,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models; // For Swashbuckle and Swagger
+using Microsoft.EntityFrameworkCore;
+using aspnet_api_heroku.Models;
 
 
 namespace aspnet_api_heroku
 {
     /// <summary>
-    /// The assembly that is used by the web host.
+    /// Used by the web host for configuration.
     /// </summary>
     public class Startup
     {
@@ -65,7 +70,21 @@ namespace aspnet_api_heroku
         /// </param>
         public void ConfigureServices(IServiceCollection services)
         {
+            // Adds the database context to the DI container and
+            // specify that the database context will use an in-memory database.
+            services.AddDbContext<TodoContext>(opt =>
+               opt.UseInMemoryDatabase("TodoList"));
             services.AddControllers();
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ToDo API", Version = "v1" });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         /// <summary>This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,6 +103,15 @@ namespace aspnet_api_heroku
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger(); // Enable middleware to serve generated Swagger as a JSON endpoint.
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseHttpsRedirection();
 
