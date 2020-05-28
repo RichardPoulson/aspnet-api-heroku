@@ -111,7 +111,7 @@ namespace aspnet_api_heroku
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Article API V1");
-                c.RoutePrefix = string.Empty; // Serve the Swagger UI at the app's root
+                // c.RoutePrefix = string.Empty; // Serve the Swagger UI at the app's root
             });
 
             app.UseHttpsRedirection();
