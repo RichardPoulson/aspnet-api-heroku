@@ -20,7 +20,7 @@
     "aspnet_api_heroku": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "/",
+      "launchUrl": "/swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
